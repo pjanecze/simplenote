@@ -12,6 +12,8 @@ import android.widget.RemoteViews;
 public class SimpleNoteWidgetProvider extends AppWidgetProvider {
 	public static final String ADD_ACTION = "com.pj.simpleNote.ADD_ACTION";
 	public static final String EDIT_ACTION = "com.pj.simpleNote.EDIT_ACTION";
+	public static final String CHECKED_ACTION = "com.pj.simpleNote.CHECKED_ACTION";
+	public static final String REMOVE_ACTION = "com.pj.simpleNote.REMOVE_ACTION";
 	public static final String EXTRA_ITEM = "com.pj.simpleNote.EXTRA_ITEM";
 
 	@Override
@@ -34,22 +36,29 @@ public class SimpleNoteWidgetProvider extends AppWidgetProvider {
 			widget.setEmptyView(R.id.list_view, R.id.empty_view);
 
 			widget.setPendingIntentTemplate(R.id.list_view,
-					getListItemsIntent(ctxt));
+					getListItemsIntent(ctxt, appWidgetIds[i]));
 
 			widget.setOnClickPendingIntent(R.id.add_note,
 					getAddButtonIntent(ctxt, appWidgetIds[i]));
+
+			widget.setOnClickPendingIntent(R.id.manage_notes,
+					getManageNotesIntent(ctxt, appWidgetIds[i]));
+
 			appWidgetManager.updateAppWidget(appWidgetIds[i], widget);
-			appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds[i], R.id.list_view);
+			appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds[i],
+					R.id.list_view);
 		}
 
 		super.onUpdate(ctxt, appWidgetManager, appWidgetIds);
 	}
 
-	private PendingIntent getListItemsIntent(Context context) {
+	private PendingIntent getListItemsIntent(Context context, int widgetId) {
 		Intent i = new Intent(context, NoteActivity.class);
-		i.setAction(EDIT_ACTION);
-		PendingIntent pi = PendingIntent.getActivity(context, 0,
-				i, PendingIntent.FLAG_UPDATE_CURRENT);
+
+		i.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+
+		PendingIntent pi = PendingIntent.getActivity(context, 0, i,
+				PendingIntent.FLAG_UPDATE_CURRENT);
 		return pi;
 	}
 
@@ -63,5 +72,18 @@ public class SimpleNoteWidgetProvider extends AppWidgetProvider {
 				PendingIntent.FLAG_UPDATE_CURRENT);
 
 		return pi;
+	}
+
+	private PendingIntent getManageNotesIntent(Context context, int widgetId) {
+		Intent i = new Intent(context, NoteManagerActivity.class);
+
+		i.setAction(ADD_ACTION);
+		i.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+
+		PendingIntent pi = PendingIntent.getActivity(context, 0, i,
+				PendingIntent.FLAG_UPDATE_CURRENT);
+
+		return pi;
+
 	}
 }

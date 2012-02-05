@@ -5,5 +5,6 @@
     <dimen name="list_row_vertical_margin">8dp</dimen>
     <dimen name="note_edit_height">300dp</dimen>
     <dimen name="app_width">300dp</dimen>
-    <dimen name="app_height">300dp</dimen>
+    <dimen name="app_height">250dp</dimen>
+    
 </resources>

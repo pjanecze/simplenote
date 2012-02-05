@@ -17,6 +17,22 @@
     
     <string name="txt_note_content_cannot_be_empty">Content cannot be empty</string>
     
+    <string name="txt_title_add">Add note</string>
+    
+    <string name="txt_title_edit">Edit note</string>
+    
+    <string name="txt_note_content">Note content</string>
+    
+    <string name="txt_remove">Remove?</string>
+    
+    <string name="txt_no">No</string>
+    
+    <string name="txt_yes">Yes</string>
+    
+    <string name="txt_note_deleted">Note deleted</string>
+    
+    <string name="txt_title_manage">Manage</string>
+    
     <string-array name="types_array">
         <item>Standard</item>
         <item>ToDo</item>

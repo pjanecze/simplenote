@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class NoteTable {
 
@@ -21,6 +22,8 @@ public class NoteTable {
 	private static final String F_CREATE_DATE = "create_date";
 
 	private static final String F_MODIFICATION_DATE = "modification_date";
+	
+	private static final String F_TYPE = "type";
 
 
 	public static void create(final SQLiteDatabase db) {
@@ -30,6 +33,7 @@ public class NoteTable {
 		sql += ", " + F_CONTENT + " TEXT";
 		sql += ", " + F_CREATE_DATE + " LONG";
 		sql += ", " + F_MODIFICATION_DATE + " LONG";
+		sql += ", " + F_TYPE + " TEXT";
 		sql += " ) ";
 		db.execSQL(sql);
 	}
@@ -45,17 +49,18 @@ public class NoteTable {
 		vals.put(F_CONTENT, uc.content);
 		vals.put(F_CREATE_DATE, uc.createDate);
 		vals.put(F_MODIFICATION_DATE, uc.modificationDate);
+		vals.put(F_TYPE, uc.type);
 		db.replace(TABLE, "", vals);
 	}
 
-	public static Note get(SQLiteDatabase db, int noteId) {
+	public static Note get(SQLiteDatabase db, long noteId) {
 		if (noteId <0) {
 			return null;
 		}
 
 		Note out = null;
 
-		final String[] cols = new String[] { F_TITLE, F_CONTENT, F_CREATE_DATE, F_MODIFICATION_DATE};
+		final String[] cols = new String[] { F_TITLE, F_CONTENT, F_CREATE_DATE, F_MODIFICATION_DATE, F_TYPE};
 		final Cursor c = db.query(TABLE, cols, F_ID + "=" + noteId,
 				null, null, null, null);
 
@@ -66,6 +71,7 @@ public class NoteTable {
 			out.content = c.getString(c.getColumnIndex(F_CONTENT));
 			out.createDate = c.getInt(c.getColumnIndex(F_CREATE_DATE));
 			out.modificationDate = c.getInt(c.getColumnIndex(F_MODIFICATION_DATE));
+			out.type = c.getString(c.getColumnIndex(F_TYPE));
 		}
 		c.close();
 
@@ -82,6 +88,7 @@ public class NoteTable {
 			out.content = c.getString(c.getColumnIndex(F_CONTENT));
 			out.createDate = c.getInt(c.getColumnIndex(F_CREATE_DATE));
 			out.modificationDate = c.getInt(c.getColumnIndex(F_MODIFICATION_DATE));
+			out.type = c.getString(c.getColumnIndex(F_TYPE));
 			notes.add(out);
 		}
 		c.close();
@@ -89,7 +96,7 @@ public class NoteTable {
 		return notes;
 	}
 
-	public static void delete(SQLiteDatabase db, int noteId) {
+	public static void delete(SQLiteDatabase db, long noteId) {
 		db.delete(TABLE, F_ID + "=" + noteId, null);
 	}
 
@@ -99,7 +106,8 @@ public class NoteTable {
 		cv.put(F_CREATE_DATE, note.createDate);
 		cv.put(F_MODIFICATION_DATE, note.modificationDate);
 		cv.put(F_TITLE, note.title);
-		
+		cv.put(F_TYPE, note.type);
+		Log.i("teset", "type: " + note.type);
 		note.id = db.insert(TABLE, null, cv);
 	}
 

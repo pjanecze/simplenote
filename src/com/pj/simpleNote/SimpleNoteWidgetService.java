@@ -62,23 +62,47 @@ class ListViewRemoteViewsFactory implements RemoteViewsFactory {
 
 	@Override
 	public RemoteViews getViewAt(int position) {
-		RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.list_item);
-		rv.setTextViewText(R.id.caption, mNotes.get(position).title);
-		rv.setTextViewText(R.id.description, mNotes.get(position).content);
+		final Note note = mNotes.get(position);
+		RemoteViews rv;
+//		if(note.type.equals(Note.TYPE_TODO)) {
+//			rv = new RemoteViews(mContext.getPackageName(), R.layout.list_item_todo);
+//			rv.setTextViewText(R.id.content, note.content);
+//
+//		} else {
+			rv = new RemoteViews(mContext.getPackageName(), R.layout.list_item);
+			rv.setTextViewText(R.id.content, note.content);
+		//}
+
+			
 		
 		
-		Intent i=new Intent();
-		Bundle extras=new Bundle();
-		
-		extras.putLong(SimpleNoteWidgetProvider.EXTRA_ITEM, mNotes.get(position).id);
-		i.putExtras(extras);
-		rv.setOnClickFillInIntent(R.id.row_id, i);
-		
+		rv.setOnClickFillInIntent(R.id.row_id, getRowIntent(position));
+		//rv.setOnClickFillInIntent(R.id.remove, getRemoveIntent(position));
 		
 		
 		return rv;
 	}
 
+	private Intent getRowIntent(int position) {
+		Intent i=new Intent();
+		Bundle extras=new Bundle();
+		
+		extras.putLong(SimpleNoteWidgetProvider.EXTRA_ITEM, mNotes.get(position).id);
+		i.setAction(SimpleNoteWidgetProvider.EDIT_ACTION);
+		i.putExtras(extras);
+		return i;
+	}
+	
+	private Intent getRemoveIntent(int position) {
+		Intent i=new Intent();
+		Bundle extras=new Bundle();
+		
+		extras.putLong(SimpleNoteWidgetProvider.EXTRA_ITEM, mNotes.get(position).id);
+		i.setAction(SimpleNoteWidgetProvider.REMOVE_ACTION);
+		i.putExtras(extras);
+		return i;
+	}
+	
 	@Override
 	public int getViewTypeCount() {
 		return 1;
