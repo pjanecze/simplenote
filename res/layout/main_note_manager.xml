@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+	android:layout_height="match_parent"
+    android:orientation="vertical">
+	<LinearLayout 
+	    android:layout_width="@dimen/app_width"
+		android:layout_height="@dimen/app_height"
+		android:layout_gravity="center_vertical|center_horizontal"
+	    android:orientation="vertical"
+	    android:background="@color/app_content_background"
+	    >
+		<LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        style="@android:style/Widget.Holo.ActionBar"
+	        >
+	        <ImageView 
+	            android:src="@drawable/ic_launcher"
+	            android:layout_width="35dp"
+	            android:layout_height="35dp"
+	            android:layout_margin="5dp"/>
+	        <TextView 
+	            android:id="@+id/title"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/txt_title_manage"
+	            style="@android:style/TextAppearance.Holo.Medium"
+	            android:layout_gravity="center_vertical"/>
+	    </LinearLayout>
+
+		<ListView 
+		    android:id="@+id/list_view"
+		    android:layout_width="match_parent"
+		    android:layout_height="0dp"
+		    android:layout_weight="1"
+		    android:background="@color/widget_content_background"
+		    android:divider="@color/list_separator"
+		    android:dividerHeight="1dp"
+	    />
+		<LinearLayout 
+		    android:layout_width="match_parent"
+		    android:background="@color/app_content_2_background"
+		    android:layout_height="0dp"
+			android:layout_weight="1">
+		    
+		
+		    <EditText
+			    android:id="@+id/note_edit"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:inputType="textMultiLine"
+			    android:hint="@string/txt_note_content"
+			    android:gravity="top"
+			    >
+		
+			    <requestFocus />
+			</EditText>
+		
+	    </LinearLayout>
+	    
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:background="@color/app_content_background">
+	        <Button 
+	            android:id="@+id/cancel"
+	            android:layout_height="wrap_content"
+	            android:layout_width="0dp"
+	            android:layout_weight="1"
+	            style="@android:style/Widget.Holo.Button.Borderless"
+	            android:text="@string/txt_cancel"
+	            />
+	        <LinearLayout 
+		        android:layout_height="match_parent"
+		        android:layout_width="1dp"
+		        android:background="@android:color/holo_blue_light"
+		        />
+	        <Button 
+	            android:id="@+id/save"
+	            android:layout_height="wrap_content"
+	            android:layout_width="0dp"
+	            android:layout_weight="1"
+	            style="@android:style/Widget.Holo.Button.Borderless"
+	            android:text="@string/txt_save"
+	            />
+	    </LinearLayout>
+	    <LinearLayout 
+		        android:layout_height="2dp"
+		        android:layout_width="match_parent"
+		        android:background="@android:color/holo_blue_light"
+		        />
+	</LinearLayout>
+
+	
+
+</LinearLayout>
