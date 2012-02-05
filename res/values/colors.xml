@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="widget_title_background">#80F5F5F5</color>
+    <color name="widget_content_background">#EEEEEE</color>
+    <color name="app_content_background">#030303</color>
+    <color name="list_item_primary_color">#555555</color>
+    <color name="list_item_secondary_color">#818181</color>
+    <color name="list_separator">#E6E6E6</color>
+</resources>

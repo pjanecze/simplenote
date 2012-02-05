@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+	android:layout_height="match_parent"
+    android:orientation="vertical">
+	<LinearLayout 
+	    android:layout_width="@dimen/app_width"
+		android:layout_height="@dimen/app_height"
+		android:layout_gravity="center_vertical|center_horizontal"
+	    android:orientation="vertical"
+	    android:background="@drawable/app_background">
+		<LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        style="@android:style/Widget.Holo.ActionBar">
+	        <ImageView 
+	            android:src="@drawable/ic_launcher"
+	            android:layout_width="35dp"
+	            android:layout_height="35dp"
+	            android:layout_margin="5dp"/>
+	        <TextView 
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:text="@string/app_name"
+	            style="@android:style/TextAppearance.Holo.Medium"
+	            
+	            android:layout_gravity="center_vertical"/>
+	        <Spinner 
+	            android:id="@+id/note_type"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_vertical"
+	            style="@android:style/Widget.Holo.Spinner"
+	            android:prompt="@string/txt_note_type_prompt"/>
+	    </LinearLayout>
+
+	    <EditText
+		    android:id="@+id/note_edit"
+		    android:layout_width="match_parent"
+		    android:layout_height="0dp"
+		    android:layout_weight="1"
+		    android:inputType="textMultiLine"
+		    >
+	
+		    <requestFocus />
+		</EditText>
+		
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal">
+		    <LinearLayout 
+		        android:layout_height="match_parent"
+		        android:layout_width="1dp"
+		        android:background="@android:color/holo_blue_light"
+		        />
+	        <Button 
+	            android:id="@+id/cancel"
+	            android:layout_height="wrap_content"
+	            android:layout_width="0dp"
+	            android:layout_weight="1"
+	            style="@android:style/Widget.Holo.Button.Borderless"
+	            android:text="@string/txt_cancel"
+	            />
+	        <LinearLayout 
+		        android:layout_height="match_parent"
+		        android:layout_width="1dp"
+		        android:background="@android:color/holo_blue_light"
+		        />
+	        <Button 
+	            android:id="@+id/save"
+	            android:layout_height="wrap_content"
+	            android:layout_width="0dp"
+	            android:layout_weight="1"
+	            style="@android:style/Widget.Holo.Button.Borderless"
+	            android:text="@string/txt_save"
+	            />
+	        <LinearLayout 
+		        android:layout_height="match_parent"
+		        android:layout_width="1dp"
+		        android:background="@android:color/holo_blue_light"
+		        />
+	    </LinearLayout>
+	    <LinearLayout 
+		        android:layout_height="1dp"
+		        android:layout_width="match_parent"
+		        android:background="@android:color/holo_blue_light"
+		        />
+	</LinearLayout>
+
+	
+
+</LinearLayout>

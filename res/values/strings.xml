@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    
+    <string name="app_name">SimpleNote</string>
+
+    
+    <string name="txt_empty_list">No notes</string>
+    
+    <string name="txt_note_type_prompt">Choose a note type</string>
+    
+    <string name="txt_save">Save</string>
+    
+    <string name="txt_cancel">Cancel</string>
+    
+    <string name="txt_note_saved">Note saved</string>
+    
+    <string name="txt_note_content_cannot_be_empty">Content cannot be empty</string>
+    
+    <string-array name="types_array">
+        <item>Standard</item>
+        <item>ToDo</item>
+    </string-array>
+</resources>

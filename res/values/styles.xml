@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="list_item" >
+        <item name="android:paddingLeft">@dimen/list_row_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/list_row_horizontal_margin</item>
+        <item name="android:paddingTop">@dimen/list_row_vertical_margin</item>
+        <item name="android:paddingBottom">@dimen/list_row_vertical_margin</item>
+    </style>
+    
+    <style name="Theme.NoteTheme" parent="@android:style/Theme.Holo.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@style/Animation.NoteAnimation</item>
+    </style>
+    <!-- just defines top layer "Animation" -->
+	<style name="Animation" />
+	
+	
+	
+	<!-- Standard animations for a full-screen window or activity. -->
+	<style name="Animation.NoteAnimation" parent="@android:style/Animation.Activity">
+
+	    <item name="android:wallpaperOpenEnterAnimation">@anim/note_in</item>
+	    <item name="android:wallpaperOpenExitAnimation">@anim/note_out</item>
+	    <item name="android:wallpaperCloseEnterAnimation">@anim/note_in</item>
+	    <item name="android:wallpaperCloseExitAnimation">@anim/note_out</item>
+
+	</style>
+</resources>

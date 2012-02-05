@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="widget_margin">8dp</dimen>
+    <dimen name="list_row_horizontal_margin">14dp</dimen>
+    <dimen name="list_row_vertical_margin">8dp</dimen>
+    <dimen name="note_edit_height">300dp</dimen>
+    <dimen name="app_width">300dp</dimen>
+    <dimen name="app_height">300dp</dimen>
+</resources>
