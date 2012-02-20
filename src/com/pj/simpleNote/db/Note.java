@@ -18,6 +18,8 @@ public class Note {
 	
 	public String type;
 	
+	public int position;
+	
 	public Date getCreateDate() {
 		return new Date(createDate);
 	}

@@ -33,6 +33,8 @@
     
     <string name="txt_title_manage">Manage</string>
     
+    <string name="txt_choosed">"%d choosed"</string>
+    
     <string-array name="types_array">
         <item>Standard</item>
         <item>ToDo</item>

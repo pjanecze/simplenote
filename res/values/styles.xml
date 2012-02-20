@@ -13,6 +13,15 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@style/Animation.NoteAnimation</item>
     </style>
+    
+    <style name="DateTextStyle" parent="@android:style/TextAppearance.Holo.Small">
+        <item name="android:textColor">@color/list_item_secondary_color</item>
+    </style>
+    
+    <style name="TitleTextStyle" parent="@android:style/TextAppearance.Holo.Medium">
+        <item name="android:textColor">@color/list_item_primary_color</item>
+    </style>
+    
     <!-- just defines top layer "Animation" -->
 	<style name="Animation" />
 	

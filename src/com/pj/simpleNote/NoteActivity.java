@@ -101,8 +101,8 @@ public class NoteActivity extends Activity implements OnClickListener{
 				note.content = content;
 				note.createDate = System.currentTimeMillis();
 				note.modificationDate = System.currentTimeMillis();
-				long selectedType = mTypeView.getSelectedItemId();
-				Log.i("test", "selectedType = " + selectedType);
+//				long selectedType = mTypeView.getSelectedItemId();
+//				Log.i("test", "selectedType = " + selectedType);
 				note.type = Note.TYPE_STANDARD;
 //				if(selectedType == 0)
 //					note.type = Note.TYPE_STANDARD;
@@ -132,7 +132,7 @@ public class NoteActivity extends Activity implements OnClickListener{
 				finish();
 			}
 		} else if(v == mRemove) {
-			NoteTable.delete(mDbHelper.getWritableDatabase(), mCurrentNote.id);
+			NoteTable.delete(mDbHelper.getWritableDatabase(), mCurrentNote);
 			
 			Intent intent = new Intent(this,SimpleNoteWidgetProvider.class);
 			intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);

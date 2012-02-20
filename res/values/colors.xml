@@ -4,6 +4,8 @@
     <color name="widget_content_background">#EEEEEE</color>
     <color name="app_content_background">#030303</color>
     <color name="app_content_2_background">#4E4E4E</color>
+    <color name="list_item_background">#EEEEEE</color>
+    <color name="list_item_background_selected">#8BC8DD</color>
     <color name="list_item_primary_color">#555555</color>
     <color name="list_item_secondary_color">#818181</color>
     <color name="list_separator">#E6E6E6</color>
