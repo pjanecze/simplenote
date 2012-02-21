@@ -4,8 +4,8 @@
   	android:minHeight="100dip"
     android:updatePeriodMillis="0"
     android:previewImage="@drawable/ic_launcher"
-    android:initialLayout="@layout/widget_listview"
-    android:autoAdvanceViewId="@+id/list_view"
+    android:initialLayout="@layout/widget_stackview"
+    android:autoAdvanceViewId="@+id/stack_view"
     android:resizeMode="horizontal|vertical">
     
 

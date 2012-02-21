@@ -11,29 +11,29 @@ public class NoteTable {
 
 	private static final long CACHE_TIME = 1000 * 3600 * 24 * 30;
 
-	private static final String TABLE = "notes";
+	public static final String TABLE = "notes";
 
-	private static final String F_ID = "note_id";
+	public static final String F_ID = "_id";
 	
-	private static final String F_TITLE = "title";
+	public static final String F_TITLE = "title";
 
-	private static final String F_CONTENT = "content";
+	public static final String F_CONTENT = "content";
 
-	private static final String F_CREATE_DATE = "create_date";
+	public static final String F_CREATE_DATE = "create_date";
 
-	private static final String F_MODIFICATION_DATE = "modification_date";
+	public static final String F_MODIFICATION_DATE = "modification_date";
 	
-	private static final String F_TYPE = "type";
+	public static final String F_TYPE = "type";
 
-	private static final String F_POSITION = "position";
+	public static final String F_POSITION = "position";
 
 	public static void create(final SQLiteDatabase db) {
 		String sql = "CREATE TABLE IF NOT EXISTS " + TABLE;
 		sql += " ( " + F_ID + " INTEGER PRIMARY KEY";
 		sql += ", " + F_TITLE + " TEXT";
 		sql += ", " + F_CONTENT + " TEXT";
-		sql += ", " + F_CREATE_DATE + " LONG";
-		sql += ", " + F_MODIFICATION_DATE + " LONG";
+		sql += ", " + F_CREATE_DATE + " INTEGER";
+		sql += ", " + F_MODIFICATION_DATE + " INTEGER";
 		sql += ", " + F_TYPE + " TEXT";
 		sql += ", " + F_POSITION + " INTEGER"; 
 		sql += " ) ";
@@ -48,7 +48,6 @@ public class NoteTable {
 		final ContentValues vals = new ContentValues();
 		vals.put(F_TITLE, uc.title);
 		vals.put(F_CONTENT, uc.content);
-		vals.put(F_CREATE_DATE, uc.createDate);
 		vals.put(F_MODIFICATION_DATE, uc.modificationDate);
 		vals.put(F_TYPE, uc.type);
 		db.update(TABLE, vals, F_ID + " = " + uc.id, null);
@@ -87,7 +86,7 @@ public class NoteTable {
 
 		Note out = null;
 
-		final String[] cols = new String[] { F_TITLE, F_CONTENT, F_CREATE_DATE, F_MODIFICATION_DATE, F_TYPE};
+		final String[] cols = new String[] { F_TITLE, F_CONTENT, F_CREATE_DATE, F_MODIFICATION_DATE, F_TYPE, F_POSITION};
 		final Cursor c = db.query(TABLE, cols, F_ID + "=" + noteId,
 				null, null, null, null);
 
@@ -108,14 +107,14 @@ public class NoteTable {
 	
 	public static ArrayList<Note> getAll(SQLiteDatabase db) {
 		ArrayList<Note> notes = new ArrayList<Note>();
-		Cursor c = db.query(TABLE, null, null, null, null, null, F_POSITION + " ASC");
+		Cursor c = getAllCursor(db);
 		while(c.moveToNext()) {
 			Note out = new Note();
 			out.id = c.getInt(c.getColumnIndex(F_ID));
 			out.title = c.getString(c.getColumnIndex(F_TITLE));
 			out.content = c.getString(c.getColumnIndex(F_CONTENT));
-			out.createDate = c.getInt(c.getColumnIndex(F_CREATE_DATE));
-			out.modificationDate = c.getInt(c.getColumnIndex(F_MODIFICATION_DATE));
+			out.createDate = c.getLong(c.getColumnIndex(F_CREATE_DATE));
+			out.modificationDate = c.getLong(c.getColumnIndex(F_MODIFICATION_DATE));
 			out.type = c.getString(c.getColumnIndex(F_TYPE));
 			out.position = c.getInt(c.getColumnIndex(F_POSITION));
 			notes.add(out);
@@ -124,12 +123,16 @@ public class NoteTable {
 		c = null;
 		return notes;
 	}
+	
+	public static Cursor getAllCursor(SQLiteDatabase db) {
+		return db.query(TABLE, null, null, null, null, null, F_POSITION + " ASC");
+	}
 
 	public static void delete(SQLiteDatabase db, Note note) {
 		db.beginTransaction();
 		try {
 			db.delete(TABLE, F_ID + "=" + note.id, null);
-			db.execSQL("UPDATE " + TABLE + " SET " + F_POSITION + " = (" + F_POSITION + " -1) WHERE F_POSITION > " + note.position);
+			db.execSQL("UPDATE " + TABLE + " SET " + F_POSITION + " = (" + F_POSITION + " -1) WHERE " + F_POSITION + " > " + note.position);
 			db.setTransactionSuccessful();
 		} finally {
 			db.endTransaction();
@@ -157,5 +160,7 @@ public class NoteTable {
 		}
 		
 	}
+
+	
 
 }

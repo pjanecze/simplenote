@@ -13,6 +13,12 @@
     	android:layout_weight="1"
     	style="@android:style/TextAppearance.Holo.Medium"
     	android:textColor="@color/list_item_primary_color"/>
+    <TextView 
+        android:id="@+id/modification_date"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|center_horizontal"
+        style="@style/DateTextStyle"/>
 	<!-- <ImageButton 
 	    android:id="@+id/remove"
 	    android:layout_width="35dp"

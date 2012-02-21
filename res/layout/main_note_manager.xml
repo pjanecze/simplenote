@@ -5,8 +5,8 @@
 	android:layout_height="match_parent"
     android:orientation="vertical">
 	<LinearLayout 
-	    android:layout_width="@dimen/app_width"
-		android:layout_height="@dimen/app_height"
+	    android:layout_width="@dimen/app_manage_width"
+		android:layout_height="@dimen/app_manage_height"
 		android:layout_gravity="center_vertical|center_horizontal"
 	    android:orientation="vertical"
 	    android:background="@color/app_content_background"
@@ -85,24 +85,11 @@
 	        <Button 
 	            android:id="@+id/cancel"
 	            android:layout_height="match_parent"
-	            android:layout_width="0dp"
-	            android:layout_weight="1"
+	            android:layout_width="match_parent"
 	            style="@android:style/Widget.Holo.Button.Borderless"
 	            android:text="@string/txt_cancel"
 	            />
-	        <LinearLayout 
-		        android:layout_height="match_parent"
-		        android:layout_width="1dp"
-		        android:background="@android:color/holo_blue_light"
-		        />
-	        <Button 
-	            android:id="@+id/save"
-	            android:layout_height="match_parent"
-	            android:layout_width="0dp"
-	            android:layout_weight="1"
-	            style="@android:style/Widget.Holo.Button.Borderless"
-	            android:text="@string/txt_save"
-	            />
+	        
 	    </LinearLayout>
 	    <LinearLayout 
 	        android:id="@+id/selector_bottom_menu"
@@ -114,23 +101,9 @@
 	        <ImageButton 
 	            android:id="@+id/remove"
 	            android:layout_height="match_parent"
-	            android:layout_width="0dp"
-	            android:layout_weight="1"
+	            android:layout_width="match_parent"
 	            style="@android:style/Widget.Holo.Button.Borderless"
 	            android:src="@android:drawable/ic_menu_delete"
-	            />
-	        <LinearLayout 
-		        android:layout_height="match_parent"
-		        android:layout_width="1dp"
-		        android:background="@android:color/holo_blue_light"
-		        />
-	        <ImageButton
-	            android:id="@+id/mark"
-	            android:layout_height="match_parent"
-	            android:layout_width="0dp"
-	            android:layout_weight="1"
-	            style="@android:style/Widget.Holo.Button.Borderless"
-	            android:src="@drawable/btn_check_on_disabled_holo_dark"
 	            />
 	    </LinearLayout>
 	    <LinearLayout 

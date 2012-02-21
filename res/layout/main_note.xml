@@ -34,7 +34,7 @@
 			    android:layout_width="35dp"
 			    android:layout_height="35dp"
 			    android:layout_margin="5dp"
-			    android:src="@android:drawable/ic_input_delete"
+			    android:src="@android:drawable/ic_menu_delete"
 			    style="@android:style/Widget.Holo.Button.Borderless"/>
 	        <!-- <Spinner 
 	            android:id="@+id/note_type"
@@ -47,7 +47,7 @@
 
 		<LinearLayout 
 		    android:layout_width="match_parent"
-		    android:background="@color/app_content_2_background"
+		    android:background="@color/widget_content_background"
 		    android:layout_height="0dp"
 			android:layout_weight="1">
 		    
@@ -58,6 +58,8 @@
 			    android:layout_height="match_parent"
 			    android:inputType="textMultiLine"
 			    android:hint="@string/txt_note_content"
+			    android:textColor="@android:color/black"
+			    android:textCursorDrawable="@null"
 			    android:gravity="top"
 			    >
 		

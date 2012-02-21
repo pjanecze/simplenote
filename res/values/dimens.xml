@@ -6,5 +6,7 @@
     <dimen name="note_edit_height">300dp</dimen>
     <dimen name="app_width">300dp</dimen>
     <dimen name="app_height">250dp</dimen>
+    <dimen name="app_manage_width">300dp</dimen>
+    <dimen name="app_manage_height">400dp</dimen>
     <dimen name="header_footer_height">48dp</dimen>
 </resources>

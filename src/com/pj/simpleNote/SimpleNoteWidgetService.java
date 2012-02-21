@@ -6,6 +6,7 @@ import java.util.List;
 import com.pj.simpleNote.db.DatabaseHelper;
 import com.pj.simpleNote.db.Note;
 import com.pj.simpleNote.db.NoteTable;
+import comp.pj.simpleNote.utils.Tools;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -64,15 +65,11 @@ class ListViewRemoteViewsFactory implements RemoteViewsFactory {
 	public RemoteViews getViewAt(int position) {
 		final Note note = mNotes.get(position);
 		RemoteViews rv;
-//		if(note.type.equals(Note.TYPE_TODO)) {
-//			rv = new RemoteViews(mContext.getPackageName(), R.layout.list_item_todo);
-//			rv.setTextViewText(R.id.content, note.content);
-//
-//		} else {
-			rv = new RemoteViews(mContext.getPackageName(), R.layout.list_item);
-			rv.setTextViewText(R.id.content, note.content);
-		//}
 
+		rv = new RemoteViews(mContext.getPackageName(), R.layout.list_item);
+		rv.setTextViewText(R.id.content, note.content);
+
+		rv.setTextViewText(R.id.modification_date, Tools.createDateText(note.modificationDate));
 			
 		
 		

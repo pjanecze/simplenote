@@ -4,11 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.util.Log;
+
 public class Tools {
 	public static String createDateText(long time) {
 		Calendar date = Calendar.getInstance();
 		date.setTimeInMillis(time);
-		
+		Log.i("test", "time: " + time);
 		if(Tools.isSameDay(date, Calendar.getInstance())) {
 			return Tools.timeToString(date.getTime(), "HH:mm");
 		} else if(Tools.isSameYear(date, Calendar.getInstance())){

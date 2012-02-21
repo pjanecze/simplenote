@@ -31,7 +31,7 @@
             android:layout_height="35dp"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="5dp"
-            android:src="@android:drawable/ic_input_get"
+            android:src="@drawable/ic_menu_find"
             style="@android:style/Widget.Holo.Button.Borderless"
             />
         <ImageButton 
@@ -40,7 +40,7 @@
             android:layout_height="35dp"
             android:layout_marginRight="5dp"
             android:layout_gravity="center_vertical"
-            android:src="@android:drawable/ic_input_add"
+            android:src="@android:drawable/ic_menu_add"
             style="@android:style/Widget.Holo.Button.Borderless"
             />
     </LinearLayout>
