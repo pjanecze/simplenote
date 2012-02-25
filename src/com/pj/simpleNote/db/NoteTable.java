@@ -54,7 +54,6 @@ public class NoteTable {
 	}
 	
 	public static void updatePosition(SQLiteDatabase db, long id, int from, int to) {
-		Log.i("test", "id: " + id + " from: " + from + " to: " + to);
 		if(id <0 || from == to) {
 			return;
 		}
@@ -67,10 +66,8 @@ public class NoteTable {
 			
 			if(to >from) {
 				db.execSQL("UPDATE " + TABLE + " SET " + F_POSITION + " = (" + F_POSITION + " -1) WHERE " +F_POSITION + " >" + from + " and " + F_POSITION + " <= " + to + " and " + F_ID + " <> " + id);
-				Log.i("test", "UPDATE " + TABLE + " SET " + F_POSITION + " = (" + F_POSITION + " -1) WHERE " +F_POSITION + " >" + from + " and " + F_POSITION + " <= " + to + " and " + F_ID + " <> " + id);
 			} else {
 				db.execSQL("UPDATE " + TABLE + " SET " + F_POSITION + " = (" + F_POSITION + " +1) WHERE " +F_POSITION + " <" + from + " and " + F_POSITION + " >= " + to + " and " + F_ID + " <> " + id);
-				Log.i("test", "UPDATE " + TABLE + " SET " + F_POSITION + " = (" + F_POSITION + " +1) WHERE " +F_POSITION + " <" + from + " and " + F_POSITION + " >= " + to + " and " + F_ID + " <> " + id);
 			}
 			db.setTransactionSuccessful();
 		} finally {

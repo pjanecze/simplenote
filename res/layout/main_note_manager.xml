@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tlv="http://schemas.android.com/apk/res/com.pj.simpleNote"
     android:layout_width="match_parent"
 	android:layout_height="match_parent"
-    android:orientation="vertical">
+    >
 	<LinearLayout 
 	    android:layout_width="@dimen/app_manage_width"
 		android:layout_height="@dimen/app_manage_height"
-		android:layout_gravity="center_vertical|center_horizontal"
+		android:layout_centerInParent="true"
 	    android:orientation="vertical"
 	    android:background="@color/app_content_background"
+	    android:id="@+id/main_layout"
 	    >
 		<LinearLayout 
 		    android:id="@+id/top_menu"
@@ -17,6 +18,7 @@
 	        android:layout_height="@dimen/header_footer_height"
 	        android:orientation="horizontal"
 	        style="@android:style/Widget.Holo.ActionBar"
+	        android:background="@color/action_bar_background"
 	        >
 	        <ImageView 
 	            android:src="@drawable/ic_launcher"
@@ -39,6 +41,7 @@
 	        android:orientation="horizontal"
 	        android:visibility="gone"
 	        style="@android:style/Widget.Holo.ActionBar"
+	        android:background="@color/action_bar_background"
 	        >
 	        <ImageButton 
 	            android:id="@+id/ok_check"
@@ -59,7 +62,11 @@
 	            android:layout_marginLeft="10dp"
 	            style="@android:style/TextAppearance.Holo.Medium"/>
 	    </LinearLayout>
-		
+		<View 
+		        android:layout_height="2dp"
+		        android:layout_width="match_parent"
+		        android:background="@android:color/holo_blue_light"
+		        />
 		<com.commonsware.cwac.tlv.TouchListView 
 		    android:id="@+id/list_view"
 		    android:layout_width="match_parent"
@@ -74,20 +81,25 @@
 			tlv:grabber="@+id/drag_icon"
 			tlv:remove_mode="fling"
 	    />
-		
+		<View 
+		        android:layout_height="1dp"
+		        android:layout_width="match_parent"
+		        android:background="@color/key_separator"
+		        />
 	    
 	    <LinearLayout 
 	        android:id="@+id/bottom_menu"
 	        android:layout_width="match_parent"
 	        android:layout_height="@dimen/header_footer_height"
 	        android:orientation="horizontal"
-	        android:background="@color/app_content_background">
+	        android:background="@color/action_bar_background">
 	        <Button 
 	            android:id="@+id/cancel"
 	            android:layout_height="match_parent"
 	            android:layout_width="match_parent"
 	            style="@android:style/Widget.Holo.Button.Borderless"
 	            android:text="@string/txt_cancel"
+	            
 	            />
 	        
 	    </LinearLayout>
@@ -96,7 +108,7 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="@dimen/header_footer_height"
 	        android:orientation="horizontal"
-	        android:background="@color/app_content_background"
+	        android:background="@color/action_bar_background"
 	        android:visibility="gone">
 	        <ImageButton 
 	            android:id="@+id/remove"
@@ -106,13 +118,9 @@
 	            android:src="@android:drawable/ic_menu_delete"
 	            />
 	    </LinearLayout>
-	    <LinearLayout 
-		        android:layout_height="2dp"
-		        android:layout_width="match_parent"
-		        android:background="@android:color/holo_blue_light"
-		        />
+	    
 	</LinearLayout>
 
 	
 
-</LinearLayout>
+</RelativeLayout>

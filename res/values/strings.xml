@@ -2,7 +2,7 @@
 <resources>
 
     
-    <string name="app_name">SimpleNote</string>
+    <string name="app_name">NottyNote</string>
 
     
     <string name="txt_empty_list">No notes</string>

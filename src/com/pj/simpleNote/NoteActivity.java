@@ -40,10 +40,14 @@ public class NoteActivity extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		getWindow().setBackgroundDrawableResource(R.drawable.blur_background);
+		
+		
 		Intent intent = getIntent();
 		mAction = intent.getAction();
 		mWidgetType = intent.getStringExtra(AbstractWidgetProvider.WIDGET_TYPE);
 		setContentView(R.layout.main_note);
+		
 		
 //		mTypeView = (Spinner) findViewById(R.id.note_type);
 //	    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(

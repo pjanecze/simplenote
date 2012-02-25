@@ -3,6 +3,7 @@ package com.pj.simpleNote.db;
 import java.util.Date;
 
 import android.database.Cursor;
+import android.util.Log;
 
 public class Note {
 	public static final String TYPE_STANDARD = "STANDARD";
@@ -42,5 +43,16 @@ public class Note {
 		out.position = c.getInt(c.getColumnIndex(NoteTable.F_POSITION));
 		return out;
 		
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		
+		if(!(o instanceof Note)) return false;
+		
+		Note note = (Note) o;
+		
+		Log.i("test", note.id + " = " + id);
+		return note.id == id;
 	}
 }

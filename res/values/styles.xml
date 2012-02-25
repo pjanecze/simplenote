@@ -19,6 +19,7 @@
     
     <style name="DateTextStyle" parent="@android:style/TextAppearance.Holo.Small">
         <item name="android:textColor">@color/list_item_secondary_color</item>
+        <item name="android:textSize">12sp</item>
     </style>
     
     <style name="TitleTextStyle" parent="@android:style/TextAppearance.Holo.Medium">
@@ -33,10 +34,10 @@
 	<!-- Standard animations for a full-screen window or activity. -->
 	<style name="Animation.NoteAnimation" parent="@android:style/Animation.Activity">
 
-	    <item name="android:wallpaperOpenEnterAnimation">@anim/note_in</item>
+	    <!-- <item name="android:wallpaperOpenEnterAnimation">@anim/note_in</item>
 	    <item name="android:wallpaperOpenExitAnimation">@anim/note_out</item>
 	    <item name="android:wallpaperCloseEnterAnimation">@anim/note_in</item>
-	    <item name="android:wallpaperCloseExitAnimation">@anim/note_out</item>
+	    <item name="android:wallpaperCloseExitAnimation">@anim/note_out</item> -->
 
 	</style>
 </resources>

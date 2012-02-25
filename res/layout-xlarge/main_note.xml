@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
 	android:layout_height="match_parent"
     android:orientation="vertical">
 	<LinearLayout 
 	    android:layout_width="@dimen/app_width"
 		android:layout_height="@dimen/app_height"
-		android:layout_gravity="center_horizontal"
-		android:layout_marginTop="10dp"
+		android:layout_centerInParent="true"
 	    android:orientation="vertical"
 	    android:background="@color/app_content_background"
 	    android:id="@+id/main_layout"
@@ -17,7 +16,6 @@
 	        android:layout_height="wrap_content"
 	        android:orientation="horizontal"
 	        style="@android:style/Widget.Holo.ActionBar"
-	        android:background="@color/action_bar_background"
 	        >
 	        <ImageView 
 	            android:src="@drawable/ic_launcher"
@@ -48,12 +46,6 @@
 	            android:prompt="@string/txt_note_type_prompt"/> -->
 	    </LinearLayout>
 
-		<View 
-		        android:layout_height="2dp"
-		        android:layout_width="match_parent"
-		        android:background="@android:color/holo_blue_light"
-		        />
-		
 		<LinearLayout 
 		    android:layout_width="match_parent"
 		    android:background="@color/widget_content_background"
@@ -77,16 +69,11 @@
 		
 	    </LinearLayout>
 	    
-		<View 
-		        android:layout_height="1dp"
-		        android:layout_width="match_parent"
-		        android:background="@color/key_separator"
-		        />
 	    <LinearLayout 
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:orientation="horizontal"
-	        android:background="@color/action_bar_background">
+	        android:background="@color/app_content_background">
 	        <Button 
 	            android:id="@+id/cancel"
 	            android:layout_height="wrap_content"
@@ -95,10 +82,10 @@
 	            style="@android:style/Widget.Holo.Button.Borderless"
 	            android:text="@string/txt_cancel"
 	            />
-	        <View 
+	        <LinearLayout 
 		        android:layout_height="match_parent"
 		        android:layout_width="1dp"
-		        android:background="@color/key_separator"
+		        android:background="@android:color/holo_blue_light"
 		        />
 	        <Button 
 	            android:id="@+id/save"
@@ -109,9 +96,13 @@
 	            android:text="@string/txt_save"
 	            />
 	    </LinearLayout>
-	    
+	    <LinearLayout 
+		        android:layout_height="2dp"
+		        android:layout_width="match_parent"
+		        android:background="@android:color/holo_blue_light"
+		        />
 	</LinearLayout>
 
 	
 
-</LinearLayout>
+</RelativeLayout>

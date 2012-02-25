@@ -10,4 +10,7 @@
     <color name="list_item_secondary_color">#818181</color>
     <color name="list_separator">#E6E6E6</color>
     <color name="stack_separator">#5d5d5d</color>
+    <color name="action_bar_background">#282828</color>
+    <color name="key_separator">#474747</color>
+    
 </resources>

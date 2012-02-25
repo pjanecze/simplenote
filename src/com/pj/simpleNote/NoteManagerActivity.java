@@ -37,7 +37,7 @@ import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class NoteManagerActivity extends Activity implements OnCheckedChangeListener, OnClickListener{
+public class NoteManagerActivity extends Activity implements OnClickListener{
 
 	public static final String EDIT_ACTION = "EDIT_ACTION_MANAGER";
 	
@@ -68,6 +68,8 @@ public class NoteManagerActivity extends Activity implements OnCheckedChangeList
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		getWindow().setBackgroundDrawableResource(R.drawable.blur_background);
+		
 		setContentView(R.layout.main_note_manager);
 		
 		mDbHelper = new DatabaseHelper(this);
@@ -88,7 +90,7 @@ public class NoteManagerActivity extends Activity implements OnCheckedChangeList
 		
 		//registerForContextMenu(listView);
 		
-		mAdapter = new ManagerAdapter(this, null, this);
+		mAdapter = new ManagerAdapter(this, null);
 		
 		listView.setAdapter(mAdapter);
 		
@@ -158,14 +160,12 @@ public class NoteManagerActivity extends Activity implements OnCheckedChangeList
 	
 	
 	private class ManagerAdapter extends CursorAdapter implements OnClickListener, OnLongClickListener, OnMenuItemClickListener{
-		
-		OnCheckedChangeListener mCheckedListener;
+
 		
 		Note selectedNote = null;
 		
-		public ManagerAdapter(Context context, Cursor c, OnCheckedChangeListener listener) {
+		public ManagerAdapter(Context context, Cursor c) {
 			super(context, c);
-			mCheckedListener = listener;
 		}
 		
 		private void onEditAction(Note note) {
@@ -200,17 +200,55 @@ public class NoteManagerActivity extends Activity implements OnCheckedChangeList
 			
 			CheckBox checkbox = (CheckBox) view.findViewById(R.id.checkbox);
 			checkbox.setTag(note);
+			checkbox.setOnCheckedChangeListener(null);
+			Log.i("test", "refresh");
+			if(checkedNotes.contains(note)) {
+				checkbox.setChecked(true);
+				view.setBackgroundResource(R.color.list_item_background);
+			} else {
+				checkbox.setChecked(false);
+				view.setBackgroundResource(android.R.color.transparent);
+				//((View)checkbox.getParent()).setBackgroundColor(R.color.list_item_background);
+			}
 			
 			TextView modificationDate = (TextView) view.findViewById(R.id.modification_date);
 			TextView createDate = (TextView) view.findViewById(R.id.create_date);
 			TextView text = (TextView) view.findViewById(R.id.text);
-
+		
 			
-			checkbox.setOnCheckedChangeListener(mCheckedListener);
+			checkbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					Log.i("test", "isChecked" + isChecked);
+					Note note = (Note) buttonView.getTag();
+					if(note == null)
+						return;
+					
+					View parent = (View) buttonView.getParent();
+					
+					if(!isChecked && checkedNotes.contains(note)) {
+						
+						checkedNotes.remove(note);
+						updateSelectorMenu();
+						parent.setBackgroundResource(R.color.list_item_background);
+
+					} else if(!checkedNotes.contains(note)){
+						Log.i("test", "add");
+						checkedNotes.add(note);
+						updateSelectorMenu();
+						parent.setBackgroundResource(R.color.list_item_background_selected);
+
+					}
+					
+					
+				}
+			});
 			
 			text.setText(note.content);
 			
-			modificationDate.setText(Tools.createDateText(note.modificationDate));
+			if(note.modificationDate != note.createDate)
+				modificationDate.setText(Tools.createDateText(note.modificationDate));
 			
 			createDate.setText(Tools.createDateText(note.createDate));
 			
@@ -282,23 +320,7 @@ public class NoteManagerActivity extends Activity implements OnCheckedChangeList
 
 	
 	
-	@Override
-	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		Note note = (Note) buttonView.getTag();
-		if(note == null)
-			return;
-		
-		View parent = (View) buttonView.getParent();
-		if(checkedNotes.contains(note)) {
-			checkedNotes.remove(note);
-			parent.setBackgroundResource(R.color.list_item_background);
-		} else {
-			checkedNotes.add(note);
-			parent.setBackgroundResource(R.color.list_item_background_selected);
-		}
-		
-		updateSelectorMenu();
-	}
+
 
 
 	@Override
@@ -313,14 +335,8 @@ public class NoteManagerActivity extends Activity implements OnCheckedChangeList
 
 	
 	private void unselectCheckboxes() {
-		final int count = listView.getChildCount();
-		for(int i =0; i < count; i++) {
-			
-			final LinearLayout child = (LinearLayout) listView.getChildAt(i);
-			final CheckBox checkbox = (CheckBox) child.getChildAt(0);
-			checkbox.setChecked(false);
-		}
-		
+		checkedNotes.clear();
+		mAdapter.notifyDataSetChanged();
 	}
 	
 	@Override
