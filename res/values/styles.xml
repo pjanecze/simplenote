@@ -6,6 +6,9 @@
         <item name="android:paddingTop">@dimen/list_row_vertical_margin</item>
         <item name="android:paddingBottom">@dimen/list_row_vertical_margin</item>
     </style>
+    <style name="stack_item">
+        <item name="android:background">@drawable/stack_item_background</item>
+    </style>
     
     <style name="Theme.NoteTheme" parent="@android:style/Theme.Holo.NoActionBar">
         <item name="android:windowBackground">@android:color/transparent</item>

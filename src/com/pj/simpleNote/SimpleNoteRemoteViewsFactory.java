@@ -3,39 +3,31 @@ package com.pj.simpleNote;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.pj.simpleNote.db.DatabaseHelper;
-import com.pj.simpleNote.db.Note;
-import com.pj.simpleNote.db.NoteTable;
-import comp.pj.simpleNote.utils.Tools;
-
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.RemoteViewsService;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
-public class SimpleNoteWidgetService extends RemoteViewsService {
+import com.pj.simpleNote.db.DatabaseHelper;
+import com.pj.simpleNote.db.Note;
+import com.pj.simpleNote.db.NoteTable;
+import comp.pj.simpleNote.utils.Tools;
 
-	@Override
-	public RemoteViewsFactory onGetViewFactory(Intent intent) {
-		return new ListViewRemoteViewsFactory(this.getApplicationContext(), intent);
-	}
-
-}
-
-class ListViewRemoteViewsFactory implements RemoteViewsFactory {
+public class SimpleNoteRemoteViewsFactory implements RemoteViewsFactory {
 	private List<Note> mNotes = new ArrayList<Note>();
 	private Context mContext;
 	private int mAppWidgetId;
 	private DatabaseHelper mDbHelper;
+	private int mListItemId;
 	
-	
-	public ListViewRemoteViewsFactory(Context context, Intent intent) {
+	public SimpleNoteRemoteViewsFactory(Context context, Intent intent, int listItemId) {
 		mContext = context;
+		mListItemId = listItemId;
 		mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+		
 	}
 	
 	@Override
@@ -63,10 +55,12 @@ class ListViewRemoteViewsFactory implements RemoteViewsFactory {
 
 	@Override
 	public RemoteViews getViewAt(int position) {
+		if(mNotes.size() ==0)
+			return null;
 		final Note note = mNotes.get(position);
 		RemoteViews rv;
 
-		rv = new RemoteViews(mContext.getPackageName(), R.layout.list_item);
+		rv = new RemoteViews(mContext.getPackageName(), mListItemId);
 		rv.setTextViewText(R.id.content, note.content);
 
 		rv.setTextViewText(R.id.modification_date, Tools.createDateText(note.modificationDate));
@@ -84,21 +78,13 @@ class ListViewRemoteViewsFactory implements RemoteViewsFactory {
 		Intent i=new Intent();
 		Bundle extras=new Bundle();
 		
-		extras.putLong(SimpleNoteWidgetProvider.EXTRA_ITEM, mNotes.get(position).id);
-		i.setAction(SimpleNoteWidgetProvider.EDIT_ACTION);
+		extras.putLong(AbstractWidgetProvider.EXTRA_ITEM, mNotes.get(position).id);
+		i.setAction(AbstractWidgetProvider.EDIT_ACTION);
 		i.putExtras(extras);
 		return i;
 	}
 	
-	private Intent getRemoveIntent(int position) {
-		Intent i=new Intent();
-		Bundle extras=new Bundle();
-		
-		extras.putLong(SimpleNoteWidgetProvider.EXTRA_ITEM, mNotes.get(position).id);
-		i.setAction(SimpleNoteWidgetProvider.REMOVE_ACTION);
-		i.putExtras(extras);
-		return i;
-	}
+	
 	
 	@Override
 	public int getViewTypeCount() {
@@ -116,6 +102,7 @@ class ListViewRemoteViewsFactory implements RemoteViewsFactory {
 	public void onDataSetChanged() {
 		mNotes.clear();
 		mNotes = NoteTable.getAll(mDbHelper.getWritableDatabase());
+		
 	}
 
 	@Override

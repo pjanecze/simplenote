@@ -1,21 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <StackView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/stack_view"
-        android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+    <FrameLayout 
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:loopViews="true" />
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/empty_view"
-        android:layout_width="match_parent"
+        android:layout_weight="1">
+	    <StackView xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:id="@+id/stack_view"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:gravity="center"
+	        android:loopViews="true" />
+	    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:id="@+id/empty_view"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:background="@color/widget_title_background"/>
+    </FrameLayout>
+    <LinearLayout 
+        android:layout_width="2dp"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:background="@color/widget_content_background"
-        android:textColor="#ffffff"
-        android:textStyle="bold"
-        android:text="@string/txt_empty_list"
-        android:textSize="20sp" />
-</FrameLayout>
+        android:background="@android:color/holo_blue_light"
+        />
+    <RelativeLayout
+        android:layout_width="45dp"
+        android:layout_height="match_parent"
+        android:background="@color/widget_title_background">
+        <ImageView 
+            android:src="@drawable/ic_launcher"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"/>
+        <ImageButton 
+            android:id="@+id/manage_notes"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/add_note"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/ic_menu_find"
+            style="@android:style/Widget.Holo.Button.Borderless"
+            />
+        <ImageButton 
+            android:id="@+id/add_note"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:layout_centerHorizontal="true"
+            android:src="@android:drawable/ic_menu_add"
+            style="@android:style/Widget.Holo.Button.Borderless"
+            />
+    </RelativeLayout>
+</LinearLayout>

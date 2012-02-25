@@ -9,4 +9,5 @@
     <color name="list_item_primary_color">#555555</color>
     <color name="list_item_secondary_color">#818181</color>
     <color name="list_separator">#E6E6E6</color>
+    <color name="stack_separator">#5d5d5d</color>
 </resources>

@@ -37,6 +37,10 @@
     
     <string name="txt_notes_deleted">Notes deleted</string>
     
+    <string name="txt_edit">Edit</string>
+    
+    <string name="txt_delete">Delete</string>
+    
     <string name="label_list">simplenote list</string>
     <string name="label_stack">simplenote stack</string>
     

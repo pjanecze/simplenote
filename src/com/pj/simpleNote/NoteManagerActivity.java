@@ -1,8 +1,9 @@
 package com.pj.simpleNote;
 
+import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
 
-import com.commonsware.cwac.tlv.TouchListView;
+import com.commonsware.cwac.tlv.*;
 import com.pj.simpleNote.db.DatabaseHelper;
 import com.pj.simpleNote.db.Note;
 import com.pj.simpleNote.db.NoteTable;
@@ -13,20 +14,17 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewParent;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -34,8 +32,8 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.CursorAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
+import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,7 +60,9 @@ public class NoteManagerActivity extends Activity implements OnCheckedChangeList
 	
 	private boolean mChangeWidget = false;
 	
-	private int mWidgetId;
+	private int[] mWidgetId;
+	
+	private String mWidgetType;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class NoteManagerActivity extends Activity implements OnCheckedChangeList
 		
 		listView = (TouchListView) findViewById(R.id.list_view);
 		
-		
+		//registerForContextMenu(listView);
 		
 		mAdapter = new ManagerAdapter(this, null, this);
 		
@@ -95,8 +95,8 @@ public class NoteManagerActivity extends Activity implements OnCheckedChangeList
 		listView.setDropListener(onDrop);
 		listView.setRemoveListener(onRemove);
 		
-		mWidgetId = getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
-		
+		mWidgetId = getIntent().getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_ID);
+		mWidgetType = getIntent().getStringExtra(AbstractWidgetProvider.WIDGET_TYPE);
 		updateData();
 		updateSelectorMenu();
 		
@@ -114,6 +114,8 @@ public class NoteManagerActivity extends Activity implements OnCheckedChangeList
 			
 			selectorBottomMenu.setVisibility(View.GONE);
 			bottomMenu.setVisibility(View.VISIBLE);
+			
+			listView.draggable = true;
 		} else {
 			selectorTopMenu.setVisibility(View.VISIBLE);
 			topMenu.setVisibility(View.GONE);
@@ -129,6 +131,8 @@ public class NoteManagerActivity extends Activity implements OnCheckedChangeList
 				checkLabel = (TextView) findViewById(R.id.check_label);
 			
 			checkLabel.setText(String.format(getText(R.string.txt_choosed).toString(), checkedNotes.size()));
+			
+			listView.draggable = false;
 		}
 	}
 	
@@ -153,16 +157,23 @@ public class NoteManagerActivity extends Activity implements OnCheckedChangeList
 	
 	
 	
-	private class ManagerAdapter extends CursorAdapter implements OnClickListener, OnLongClickListener{
+	private class ManagerAdapter extends CursorAdapter implements OnClickListener, OnLongClickListener, OnMenuItemClickListener{
 		
 		OnCheckedChangeListener mCheckedListener;
+		
+		Note selectedNote = null;
 		
 		public ManagerAdapter(Context context, Cursor c, OnCheckedChangeListener listener) {
 			super(context, c);
 			mCheckedListener = listener;
 		}
 		
-
+		private void onEditAction(Note note) {
+			Intent intent = new Intent(NoteManagerActivity.this, NoteActivity.class);
+			intent.setAction(NoteManagerActivity.EDIT_ACTION);
+			intent.putExtra(AbstractWidgetProvider.EXTRA_ITEM, note.id);
+			startActivityForResult(intent, 0);
+		}
 		
 		
 		@Override
@@ -177,9 +188,7 @@ public class NoteManagerActivity extends Activity implements OnCheckedChangeList
 		@Override
 		public View newView(Context context, Cursor cursor, ViewGroup parent) {
 			final View v = LayoutInflater.from(context).inflate(R.layout.list_item_manage, null);
-			View clickable = v.findViewById(R.id.clickable);
-			clickable.setOnClickListener(this);
-			clickable.setOnLongClickListener(this);
+			
 			return v;
 		}
 
@@ -204,22 +213,63 @@ public class NoteManagerActivity extends Activity implements OnCheckedChangeList
 			modificationDate.setText(Tools.createDateText(note.modificationDate));
 			
 			createDate.setText(Tools.createDateText(note.createDate));
+			
+			View clickable = view.findViewById(R.id.clickable);
+			clickable.setTag(note);
+			clickable.setOnClickListener(this);
+			clickable.setOnLongClickListener(this);
 		}
 
 		@Override
 		public void onClick(View v) {
-			Note note = (Note) ((View)v.getParent()).getTag();
-			if(note != null) {
-				Intent intent = new Intent(NoteManagerActivity.this, NoteActivity.class);
-				intent.setAction(NoteManagerActivity.EDIT_ACTION);
-				intent.putExtra(SimpleNoteWidgetProvider.EXTRA_ITEM, note.id);
-				startActivityForResult(intent, 0);
+			if(listView.draggable) {
+				Note note = (Note) ((View)v.getParent()).getTag();
+				if(note != null) {
+					onEditAction(note);
+				}
 			}
 		}
 
 		@Override
 		public boolean onLongClick(View v) {
-			// TODO Auto-generated method stub
+			if(listView.draggable) {
+				Note note = (Note) v.getTag();
+				if(note != null) {
+					selectedNote = note;
+					PopupMenu popup = new PopupMenu(NoteManagerActivity.this, v);
+		
+				    // This activity implements OnMenuItemClickListener
+				    popup.setOnMenuItemClickListener(this);
+				    popup.inflate(R.menu.context_manage_list);
+				    popup.show();
+					
+				}
+			}
+			return true;
+		}
+
+
+
+
+		@Override
+		public boolean onMenuItemClick(MenuItem item) {
+			ContextMenuInfo info = item.getMenuInfo();
+			switch (item.getItemId()) {
+			case R.id.edit:
+				onEditAction(selectedNote);
+				selectedNote = null;
+				break;
+			case R.id.delete:
+				NoteTable.delete(mDbHelper.getWritableDatabase(), selectedNote);
+				selectedNote = null;
+				
+				mChangeWidget = true;
+				updateData();
+				Toast.makeText(NoteManagerActivity.this, R.string.txt_note_deleted, Toast.LENGTH_SHORT).show();
+				break;
+			default:
+				break;
+			}
 			return false;
 		}
 		
@@ -261,27 +311,40 @@ public class NoteManagerActivity extends Activity implements OnCheckedChangeList
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
+	
+	private void unselectCheckboxes() {
+		final int count = listView.getChildCount();
+		for(int i =0; i < count; i++) {
+			
+			final LinearLayout child = (LinearLayout) listView.getChildAt(i);
+			final CheckBox checkbox = (CheckBox) child.getChildAt(0);
+			checkbox.setChecked(false);
+		}
+		
+	}
+	
 	@Override
 	public void onClick(View v) {
 		if(v == okCheckButton) {
-			final int count = listView.getChildCount();
-			for(int i =0; i < count; i++) {
-				
-				final LinearLayout child = (LinearLayout) listView.getChildAt(i);
-				final CheckBox checkbox = (CheckBox) child.getChildAt(0);
-				checkbox.setChecked(false);
-			}
+			unselectCheckboxes();
 			
 			updateSelectorMenu();
 		} else if(v == cancel) {
 			finish();
 		} else if(v == remove) {
-			for(Note note : checkedNotes) {
-				NoteTable.delete(mDbHelper.getWritableDatabase(), note);
+			int i;
+			int size = checkedNotes.size();
+			for(i = 0; i < size; i++) {
+				NoteTable.delete(mDbHelper.getWritableDatabase(), checkedNotes.get(i));
 			}
+			
+			unselectCheckboxes();
+			
 			mChangeWidget = true;
 			updateData();
 			Toast.makeText(this, R.string.txt_notes_deleted, Toast.LENGTH_SHORT).show();
+			updateSelectorMenu();
+			
 		} 
 	}
 
@@ -290,19 +353,23 @@ public class NoteManagerActivity extends Activity implements OnCheckedChangeList
 	@Override
 	protected void onPause() {
 		if(mChangeWidget) {
-			Intent intent = new Intent(this,SimpleNoteWidgetProvider.class);
-			intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-
-			// Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
-			// since it seems the onUpdate() is only fired on that:
-			int[] ids = {mWidgetId};
-			Log.i("test", "id: " + mWidgetId);
-			intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
-			sendBroadcast(intent);
+			if(mWidgetType.equals(AbstractWidgetProvider.TYPE_LIST)) {
+				Tools.updateWidget(this, SimpleNoteListWidgetProvider.class, mWidgetId);
+			} else {
+				Tools.updateWidget(this, SimpleNoteStackWidgetProvider.class, mWidgetId);
+			}
 			mChangeWidget = false;
 		}
 		super.onPause();
 	}
+	
+//	@Override
+//	public void onCreateContextMenu(ContextMenu menu, View v,
+//			ContextMenuInfo menuInfo) {
+//		super.onCreateContextMenu(menu, v, menuInfo);
+//	    MenuInflater inflater = getMenuInflater();
+//	    inflater.inflate(R.menu.context_manage_list, menu);
+//	}
 
 	@Override
 	protected void onDestroy() {

@@ -4,9 +4,29 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.pj.simpleNote.AbstractWidgetProvider;
+import com.pj.simpleNote.NoteActivity;
+import com.pj.simpleNote.NoteManagerActivity;
+import com.pj.simpleNote.SimpleNoteListWidgetProvider;
+import com.pj.simpleNote.SimpleNoteStackWidgetProvider;
+
+import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 public class Tools {
+	
+	public static void updateWidget(Context context, Class<?> cl, int[] widgetIds) {
+		Intent intent;
+		intent = new Intent(context, cl);
+		
+		intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,widgetIds);
+		context.sendBroadcast(intent);
+	}
+	
 	public static String createDateText(long time) {
 		Calendar date = Calendar.getInstance();
 		date.setTimeInMillis(time);

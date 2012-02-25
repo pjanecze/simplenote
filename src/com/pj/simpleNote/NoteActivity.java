@@ -3,22 +3,19 @@ package com.pj.simpleNote;
 import com.pj.simpleNote.db.DatabaseHelper;
 import com.pj.simpleNote.db.Note;
 import com.pj.simpleNote.db.NoteTable;
+import comp.pj.simpleNote.utils.Tools;
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.RemoteViews;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,17 +23,18 @@ public class NoteActivity extends Activity implements OnClickListener{
 
 	private static final int MAX_TITLE_LENGTH = 20;
 	
-	private Spinner mTypeView;
 	private Button mCancel, mSave;
 	private ImageButton mRemove;
 	private EditText mContent;
 	private DatabaseHelper mDbHelper;
 	
-	private int mWidgetId; 
+	private int[] mWidgetId; 
 	
 	private String mAction;
 	
 	private Note mCurrentNote;
+	
+	private String mWidgetType;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +42,7 @@ public class NoteActivity extends Activity implements OnClickListener{
 		
 		Intent intent = getIntent();
 		mAction = intent.getAction();
-		
-
+		mWidgetType = intent.getStringExtra(AbstractWidgetProvider.WIDGET_TYPE);
 		setContentView(R.layout.main_note);
 		
 //		mTypeView = (Spinner) findViewById(R.id.note_type);
@@ -67,18 +64,19 @@ public class NoteActivity extends Activity implements OnClickListener{
 	    
 	    mDbHelper = new DatabaseHelper(this);
 	    
-	    mWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
+	    
+	    mWidgetId = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_ID);
 	    
 	    
 	    
 	    final TextView title = (TextView) findViewById(R.id.title);
-	    if(mAction.equals(SimpleNoteWidgetProvider.ADD_ACTION)) {
+	    if(mAction.equals(AbstractWidgetProvider.ADD_ACTION)) {
 	    	title.setText(R.string.txt_title_add);
 	    	mRemove.setVisibility(View.GONE);
-	    } else if(mAction.equals(SimpleNoteWidgetProvider.EDIT_ACTION) || mAction.equals(NoteManagerActivity.EDIT_ACTION)){
+	    } else if(mAction.equals(AbstractWidgetProvider.EDIT_ACTION) || mAction.equals(NoteManagerActivity.EDIT_ACTION)){
 	    	title.setText(R.string.txt_title_edit);
-	    	Log.i("test", "id: " + intent.getLongExtra(SimpleNoteWidgetProvider.EXTRA_ITEM, -1));
-	    	mCurrentNote = NoteTable.get(mDbHelper.getReadableDatabase(), intent.getLongExtra(SimpleNoteWidgetProvider.EXTRA_ITEM, -1)); 
+	    	Log.i("test", "id: " + intent.getLongExtra(AbstractWidgetProvider.EXTRA_ITEM, -1));
+	    	mCurrentNote = NoteTable.get(mDbHelper.getReadableDatabase(), intent.getLongExtra(AbstractWidgetProvider.EXTRA_ITEM, -1)); 
 	    	mContent.setText(mCurrentNote.content);
 	    }
 	    mContent.setSelection(mContent.getText().length());
@@ -124,15 +122,16 @@ public class NoteActivity extends Activity implements OnClickListener{
 				if(mAction.equals(NoteManagerActivity.EDIT_ACTION)) {
 					setResult(RESULT_OK);
 				} else {
-					Intent intent = new Intent(this,SimpleNoteWidgetProvider.class);
-					intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-		
-					// Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
-					// since it seems the onUpdate() is only fired on that:
-					int[] ids = {mWidgetId};
-					Log.i("test", "id: " + mWidgetId);
-					intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
-					sendBroadcast(intent);
+					
+					//first fast send to sender
+					//Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+					
+					if(mWidgetType.equals(AbstractWidgetProvider.TYPE_LIST)) {
+						Tools.updateWidget(this, SimpleNoteListWidgetProvider.class, mWidgetId);
+					} else {
+						Tools.updateWidget(this, SimpleNoteStackWidgetProvider.class, mWidgetId);
+					}
+					
 				}
 				Toast.makeText(this, getText(R.string.txt_note_saved), Toast.LENGTH_SHORT).show();
 				finish();
@@ -144,15 +143,11 @@ public class NoteActivity extends Activity implements OnClickListener{
 			if(mAction.equals(NoteManagerActivity.EDIT_ACTION)) {
 				setResult(RESULT_OK);
 			} else {
-				Intent intent = new Intent(this,SimpleNoteWidgetProvider.class);
-				intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-	
-				// Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
-				// since it seems the onUpdate() is only fired on that:
-				int[] ids = {mWidgetId};
-				Log.i("test", "id: " + mWidgetId);
-				intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
-				sendBroadcast(intent);
+				if(mWidgetType.equals(AbstractWidgetProvider.TYPE_LIST)) {
+					Tools.updateWidget(this, SimpleNoteListWidgetProvider.class, mWidgetId);
+				} else {
+					Tools.updateWidget(this, SimpleNoteStackWidgetProvider.class, mWidgetId);
+				}
 			}
 			Toast.makeText(this, getText(R.string.txt_note_deleted), Toast.LENGTH_SHORT).show();
 			finish();
