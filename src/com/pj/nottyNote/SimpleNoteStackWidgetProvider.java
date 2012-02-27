@@ -1,20 +1,20 @@
-package com.pj.simpleNote;
+package com.pj.nottyNote;
 
-import comp.pj.simpleNote.utils.Tools;
 
 import android.appwidget.AppWidgetManager;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.widget.RemoteViews;
 
-public class SimpleNoteListWidgetProvider extends AbstractWidgetProvider{
-
+public class SimpleNoteStackWidgetProvider extends AbstractWidgetProvider {
 	@Override
 	public void onUpdate(Context ctxt, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
+		
 		for (int i = 0; i < appWidgetIds.length; i++) {
-			Intent svcIntent = new Intent(ctxt, SimpleNoteListWidgetService.class);
+			Intent svcIntent = new Intent(ctxt, SimpleNoteStackWidgetService.class);
 
 			svcIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
 					appWidgetIds[i]);
@@ -22,24 +22,24 @@ public class SimpleNoteListWidgetProvider extends AbstractWidgetProvider{
 					.toUri(Intent.URI_INTENT_SCHEME)));
 
 			RemoteViews widget = new RemoteViews(ctxt.getPackageName(),
-					R.layout.widget_listview);
+					R.layout.widget_stackview);
 
-			widget.setRemoteAdapter(appWidgetIds[i], R.id.list_view, svcIntent);
+			widget.setRemoteAdapter(appWidgetIds[i], R.id.stack_view, svcIntent);
 
-			widget.setEmptyView(R.id.list_view, R.id.empty_view);
+			widget.setEmptyView(R.id.stack_view, R.id.empty_view);
 
-			widget.setPendingIntentTemplate(R.id.list_view,
-					getListItemsIntent(ctxt, appWidgetIds, TYPE_LIST));
+			widget.setPendingIntentTemplate(R.id.stack_view,
+					getListItemsIntent(ctxt, appWidgetIds, TYPE_STACK));
 
 			widget.setOnClickPendingIntent(R.id.add_note,
-					getAddButtonIntent(ctxt, appWidgetIds, TYPE_LIST));
+					getAddButtonIntent(ctxt, appWidgetIds, TYPE_STACK));
 
 			widget.setOnClickPendingIntent(R.id.manage_notes,
-					getManageNotesIntent(ctxt, appWidgetIds, TYPE_LIST));
+					getManageNotesIntent(ctxt, appWidgetIds, TYPE_STACK));
 
 			appWidgetManager.updateAppWidget(appWidgetIds[i], widget);
 			appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds[i],
-					R.id.list_view);
+					R.id.stack_view);
 		}
 
 		super.onUpdate(ctxt, appWidgetManager, appWidgetIds);

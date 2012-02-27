@@ -1,9 +1,11 @@
-package com.pj.simpleNote;
+package com.pj.nottyNote;
 
-import com.pj.simpleNote.db.DatabaseHelper;
-import com.pj.simpleNote.db.Note;
-import com.pj.simpleNote.db.NoteTable;
-import comp.pj.simpleNote.utils.Tools;
+import com.pj.nottyNote.db.DatabaseHelper;
+import com.pj.nottyNote.db.Note;
+import com.pj.nottyNote.db.NoteTable;
+import com.pj.nottyNote.utils.Tools;
+
+
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
@@ -39,7 +41,6 @@ public class NoteActivity extends Activity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		getWindow().setBackgroundDrawableResource(R.drawable.blur_background);
 		
 		

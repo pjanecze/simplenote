@@ -1,9 +1,8 @@
-package com.pj.simpleNote.db;
+package com.pj.nottyNote.db;
 
 import java.util.Date;
 
 import android.database.Cursor;
-import android.util.Log;
 
 public class Note {
 	public static final String TYPE_STANDARD = "STANDARD";
@@ -51,8 +50,7 @@ public class Note {
 		if(!(o instanceof Note)) return false;
 		
 		Note note = (Note) o;
-		
-		Log.i("test", note.id + " = " + id);
+
 		return note.id == id;
 	}
 }

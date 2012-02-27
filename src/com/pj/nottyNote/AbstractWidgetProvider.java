@@ -1,4 +1,4 @@
-package com.pj.simpleNote;
+package com.pj.nottyNote;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;

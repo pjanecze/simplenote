@@ -1,24 +1,16 @@
-package comp.pj.simpleNote.utils;
+package com.pj.nottyNote.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.pj.simpleNote.AbstractWidgetProvider;
-import com.pj.simpleNote.NoteActivity;
-import com.pj.simpleNote.NoteManagerActivity;
-import com.pj.simpleNote.R;
-import com.pj.simpleNote.SimpleNoteListWidgetProvider;
-import com.pj.simpleNote.SimpleNoteStackWidgetProvider;
+import com.pj.nottyNote.R;
 
 import android.app.Activity;
-import android.app.PendingIntent;
+
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 

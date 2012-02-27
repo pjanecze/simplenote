@@ -1,11 +1,10 @@
-package com.pj.simpleNote.db;
+package com.pj.nottyNote.db;
 
 import java.util.ArrayList;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 public class NoteTable {
 

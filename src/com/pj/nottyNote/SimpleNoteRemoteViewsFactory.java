@@ -1,4 +1,4 @@
-package com.pj.simpleNote;
+package com.pj.nottyNote;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,14 +7,15 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
-import com.pj.simpleNote.db.DatabaseHelper;
-import com.pj.simpleNote.db.Note;
-import com.pj.simpleNote.db.NoteTable;
-import comp.pj.simpleNote.utils.Tools;
+import com.pj.nottyNote.db.DatabaseHelper;
+import com.pj.nottyNote.db.Note;
+import com.pj.nottyNote.db.NoteTable;
+import com.pj.nottyNote.utils.Tools;
+
+
 
 public class SimpleNoteRemoteViewsFactory implements RemoteViewsFactory {
 	private List<Note> mNotes = new ArrayList<Note>();

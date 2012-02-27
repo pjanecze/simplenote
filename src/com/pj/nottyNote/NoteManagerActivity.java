@@ -1,13 +1,14 @@
-package com.pj.simpleNote;
+package com.pj.nottyNote;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
 
 import com.commonsware.cwac.tlv.*;
-import com.pj.simpleNote.db.DatabaseHelper;
-import com.pj.simpleNote.db.Note;
-import com.pj.simpleNote.db.NoteTable;
-import comp.pj.simpleNote.utils.Tools;
+import com.pj.nottyNote.db.DatabaseHelper;
+import com.pj.nottyNote.db.Note;
+import com.pj.nottyNote.db.NoteTable;
+import com.pj.nottyNote.utils.Tools;
+
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;

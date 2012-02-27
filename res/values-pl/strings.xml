@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    
+    <string name="app_name">Notty Note</string>
+
+    
+    <string name="txt_empty_list">Brak notatek</string>
+    
+    <string name="txt_note_type_prompt">Wybierz typ notatki</string>
+    
+    <string name="txt_save">Zapisz</string>
+    
+    <string name="txt_cancel">Anuluj</string>
+    
+    <string name="txt_note_saved">Notatka zapisana</string>
+    
+    <string name="txt_note_content_cannot_be_empty">Zawartość notatki nie może być pusta</string>
+    
+    <string name="txt_title_add">Dodawanie notatki</string>
+    
+    <string name="txt_title_edit">Edycja notatki</string>
+    
+    <string name="txt_note_content">Zawartość notatki</string>
+    
+    <string name="txt_remove">Usunąć?</string>
+    
+    <string name="txt_no">Nie</string>
+    
+    <string name="txt_yes">Tak</string>
+    
+    <string name="txt_note_deleted">Notatka usunięta</string>
+    
+    <string name="txt_title_manage">Zarządzanie</string>
+    
+    <string name="txt_choosed">"%d wybranych"</string>
+    
+    <string name="txt_notes_deleted">Notatki zostały usunięte</string>
+    
+    <string name="txt_edit">Edytuj</string>
+    
+    <string name="txt_delete">Usuń</string>
+    
+    <string name="label_list">NottyNote lista</string>
+    
+    <string name="label_stack">NottyNote stos</string>
+    
+    <string name="txt_info">"Teraz musisz dodać jeden z widżetów do pulpitu."</string>
+    
+    <string name="txt_info_1">"Znajdziesz je na liście dostępnych widżetów."</string>
+    
+    <string name="txt_list">List</string>
+    
+    <string name="txt_stack">Stack</string>
+    
+    <string name="txt_ok">Ok</string>
+    
+    <string-array name="types_array">
+        <item>Domyślna</item>
+        <item>ToDo</item>
+    </string-array>
+</resources>

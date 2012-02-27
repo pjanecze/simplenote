@@ -1,4 +1,4 @@
-package com.pj.simpleNote.db;
+package com.pj.nottyNote.db;
 
 import android.content.Context;
 import android.database.SQLException;

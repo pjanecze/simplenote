@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pj.simpleNote"
-    android:versionCode="1"
+    package="com.pj.nottyNote"
+    android:versionCode="2"
     android:versionName="1.0" >
 
     <uses-sdk android:minSdkVersion="14" />
@@ -30,8 +30,18 @@
              android:permission="android.permission.BIND_REMOTEVIEWS" />
 		<service android:name="SimpleNoteStackWidgetService"
              android:permission="android.permission.BIND_REMOTEVIEWS" />
-		<activity android:name="NoteActivity" android:theme="@style/Theme.NoteTheme"></activity>
-		<activity android:name="NoteManagerActivity" android:theme="@style/Theme.NoteTheme"></activity>
+		<activity android:name="NoteActivity" android:theme="@style/Theme.NoteTheme"
+		    android:excludeFromRecents="true"/>
+		    
+		<activity android:name="NoteManagerActivity" android:theme="@style/Theme.NoteTheme"
+		    android:excludeFromRecents="true"/>
+		<activity android:label="@string/app_name" android:name="InfoActivity" android:theme="@style/Theme.NoteTheme" android:noHistory="true"
+		    >
+		    <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+		</activity>
     </application>
 
 </manifest>

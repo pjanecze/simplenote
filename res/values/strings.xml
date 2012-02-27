@@ -2,7 +2,7 @@
 <resources>
 
     
-    <string name="app_name">NottyNote</string>
+    <string name="app_name">Notty Note</string>
 
     
     <string name="txt_empty_list">No notes</string>
@@ -41,8 +41,18 @@
     
     <string name="txt_delete">Delete</string>
     
-    <string name="label_list">simplenote list</string>
-    <string name="label_stack">simplenote stack</string>
+    <string name="label_list">NottyNote list</string>
+    <string name="label_stack">NottyNote stack</string>
+    
+    <string name="txt_info">"Now you have to add one of the widgets to your homescreen."</string>
+    
+    <string name="txt_info_1">"You will find them in your widgets list."</string>
+    
+    <string name="txt_list">List</string>
+    
+    <string name="txt_stack">Stack</string>
+    
+    <string name="txt_ok">Ok</string>
     
     <string-array name="types_array">
         <item>Standard</item>

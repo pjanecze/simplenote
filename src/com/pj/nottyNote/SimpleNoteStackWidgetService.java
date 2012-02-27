@@ -1,8 +1,9 @@
-package com.pj.simpleNote;
+package com.pj.nottyNote;
+
 
 import android.content.Intent;
 import android.widget.RemoteViewsService;
-import android.widget.RemoteViewsService.RemoteViewsFactory;
+
 
 public class SimpleNoteStackWidgetService extends RemoteViewsService {
 
