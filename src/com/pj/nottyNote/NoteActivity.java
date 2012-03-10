@@ -38,6 +38,8 @@ public class NoteActivity extends Activity implements OnClickListener{
 	
 	private String mWidgetType;
 	
+	boolean forResult;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,7 +77,7 @@ public class NoteActivity extends Activity implements OnClickListener{
 	    
 	    
 	    final TextView title = (TextView) findViewById(R.id.title);
-	    if(mAction.equals(AbstractWidgetProvider.ADD_ACTION)) {
+	    if(mAction.equals(AbstractWidgetProvider.ADD_ACTION) || mAction.equals(NoteManagerActivity.ADD_NOTE)) {
 	    	title.setText(R.string.txt_title_add);
 	    	mRemove.setVisibility(View.GONE);
 	    } else if(mAction.equals(AbstractWidgetProvider.EDIT_ACTION) || mAction.equals(NoteManagerActivity.EDIT_ACTION)){
@@ -85,7 +87,7 @@ public class NoteActivity extends Activity implements OnClickListener{
 	    	mContent.setText(mCurrentNote.content);
 	    }
 	    mContent.setSelection(mContent.getText().length());
-	    
+	    forResult = intent.getBooleanExtra("forResult", false);
 	    
 	    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 	    
@@ -96,6 +98,9 @@ public class NoteActivity extends Activity implements OnClickListener{
 		if(v == mCancel) {
 			if(mAction.equals(NoteManagerActivity.EDIT_ACTION)) {
 				setResult(RESULT_CANCELED);
+			}
+			if(!forResult) {
+				moveTaskToBack(true);
 			}
 			finish();
 		}else if(v == mSave) {
@@ -124,8 +129,14 @@ public class NoteActivity extends Activity implements OnClickListener{
 					note.id = mCurrentNote.id;
 					NoteTable.update(mDbHelper.getWritableDatabase(), note);
 				}
-				if(mAction.equals(NoteManagerActivity.EDIT_ACTION)) {
+				if(mAction.equals(NoteManagerActivity.EDIT_ACTION) || mAction.equals(NoteManagerActivity.ADD_NOTE)) {
 					setResult(RESULT_OK);
+					Toast.makeText(this, getText(R.string.txt_note_saved), Toast.LENGTH_SHORT).show();
+					
+					if(!forResult) {
+						moveTaskToBack(true);
+					}
+					finish();
 				} else {
 					
 					//first fast send to sender
@@ -136,10 +147,14 @@ public class NoteActivity extends Activity implements OnClickListener{
 					} else {
 						Tools.updateWidget(this, SimpleNoteStackWidgetProvider.class, mWidgetId);
 					}
+					Toast.makeText(this, getText(R.string.txt_note_saved), Toast.LENGTH_SHORT).show();
+					if(!forResult) {
+						moveTaskToBack(true);
+					}
+					finish();
 					
 				}
-				Toast.makeText(this, getText(R.string.txt_note_saved), Toast.LENGTH_SHORT).show();
-				finish();
+				
 			}
 		} else if(v == mRemove) {
 			
@@ -155,6 +170,9 @@ public class NoteActivity extends Activity implements OnClickListener{
 				}
 			}
 			Toast.makeText(this, getText(R.string.txt_note_deleted), Toast.LENGTH_SHORT).show();
+			if(!forResult) {
+				moveTaskToBack(true);
+			}
 			finish();
 		}
 	}
@@ -163,7 +181,9 @@ public class NoteActivity extends Activity implements OnClickListener{
 	protected void onPause() {
 		mDbHelper.close();
 		super.onPause();
-		
+		if(!forResult) {
+			moveTaskToBack(true);
+		}
 		finish();
 	}
 

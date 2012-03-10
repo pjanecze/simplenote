@@ -9,4 +9,9 @@
     <dimen name="app_manage_width">300dp</dimen>
     <dimen name="app_manage_height">400dp</dimen>
     <dimen name="header_footer_height">48dp</dimen>
+    
+    <dimen name="info_width">280dp</dimen>
+    <dimen name="main_note_top_margin">10dp</dimen>
+    <dimen name="stack_item_width">150dp</dimen>
+    <dimen name="stack_widget_width">180dip</dimen>
 </resources>

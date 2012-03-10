@@ -17,9 +17,29 @@ public class InfoActivity extends Activity implements View.OnClickListener{
 		ok.setOnClickListener(this);
 	}
 
+	
+	
+	@Override
+	protected void onPause() {
+		View mainLayout = findViewById(R.id.main_layout);
+		mainLayout.setVisibility(View.GONE);
+		super.onPause();
+	}
+
+
+
+	@Override
+	protected void onResume() {
+		View mainLayout = findViewById(R.id.main_layout);
+		mainLayout.setVisibility(View.VISIBLE);
+		super.onResume();
+	}
+
+
+
 	@Override
 	public void onClick(View v) {
-		moveTaskToBack(false);
+		moveTaskToBack(true);
 	}
 
 	

@@ -3,7 +3,7 @@
     android:minWidth="146dip"
   	android:minHeight="100dip"
     android:updatePeriodMillis="0"
-    android:previewImage="@drawable/simplenote_list_ori_portrait"
+    android:previewImage="@drawable/nottynote_list_ori_landscape"
     android:initialLayout="@layout/widget_listview"
     android:autoAdvanceViewId="@+id/list_view"
     android:resizeMode="horizontal|vertical">

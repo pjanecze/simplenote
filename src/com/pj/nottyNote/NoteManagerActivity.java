@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -41,6 +42,8 @@ import android.widget.Toast;
 public class NoteManagerActivity extends Activity implements OnClickListener{
 
 	public static final String EDIT_ACTION = "EDIT_ACTION_MANAGER";
+
+	public static final String ADD_NOTE = "ADD_ACTION_MANAGER";
 	
 	TouchListView listView;
 	
@@ -50,7 +53,7 @@ public class NoteManagerActivity extends Activity implements OnClickListener{
 	
 	View topMenu, selectorTopMenu, bottomMenu, selectorBottomMenu;
 	
-	ImageButton okCheckButton, remove;
+	ImageButton okCheckButton, remove, addNote;
 	Button cancel;
 	
 	TextView checkLabel;
@@ -79,6 +82,9 @@ public class NoteManagerActivity extends Activity implements OnClickListener{
 		cancel.setOnClickListener(this);
 		remove = (ImageButton) findViewById(R.id.remove);
 		remove.setOnClickListener(this);
+		addNote = (ImageButton) findViewById(R.id.add_note);
+		addNote.setOnClickListener(this);
+		
 		
 		topMenu = findViewById(R.id.top_menu);
 		selectorTopMenu = findViewById(R.id.selector_top_menu);
@@ -173,6 +179,7 @@ public class NoteManagerActivity extends Activity implements OnClickListener{
 			Intent intent = new Intent(NoteManagerActivity.this, NoteActivity.class);
 			intent.setAction(NoteManagerActivity.EDIT_ACTION);
 			intent.putExtra(AbstractWidgetProvider.EXTRA_ITEM, note.id);
+			intent.putExtra("forResult", true);
 			startActivityForResult(intent, 0);
 		}
 		
@@ -347,6 +354,7 @@ public class NoteManagerActivity extends Activity implements OnClickListener{
 			
 			updateSelectorMenu();
 		} else if(v == cancel) {
+			moveTaskToBack(true);
 			finish();
 		} else if(v == remove) {
 			int i;
@@ -362,7 +370,12 @@ public class NoteManagerActivity extends Activity implements OnClickListener{
 			Toast.makeText(this, R.string.txt_notes_deleted, Toast.LENGTH_SHORT).show();
 			updateSelectorMenu();
 			
-		} 
+		} else if(v == addNote) {
+			Intent intent = new Intent(NoteManagerActivity.this, NoteActivity.class);
+			intent.setAction(NoteManagerActivity.ADD_NOTE);
+			intent.putExtra("forResult", true);
+			startActivityForResult(intent, 0);
+		}
 	}
 
 	
@@ -389,10 +402,22 @@ public class NoteManagerActivity extends Activity implements OnClickListener{
 //	}
 
 	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+	    	moveTaskToBack(true);
+	    	finish();
+	    	return true;
+	    } else { 
+	        return super.onKeyDown(keyCode, event);
+	    }
+	}
+	
+	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		cursor.close();
 		mDbHelper.close();
+		
 	}
 	
 	
