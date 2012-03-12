@@ -42,7 +42,6 @@
             </intent-filter>
 		</activity> -->
 		<activity android:label="@string/app_name" android:name="InfoActivity" android:theme="@style/Theme.NoteTheme"
-		    android:screenOrientation="@integer/test"
 		    >
 		    <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
